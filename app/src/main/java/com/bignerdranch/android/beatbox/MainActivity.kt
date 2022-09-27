@@ -3,6 +3,7 @@ package com.bignerdranch.android.beatbox
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.ViewGroup
+import android.widget.SeekBar
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -25,6 +26,15 @@ class MainActivity : AppCompatActivity() {
             layoutManager = GridLayoutManager(context, 3)
             adapter = SoundAdapter(beatBox.sounds)
         }
+
+        binding.seekBar.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener{
+            override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
+                // Ваш код
+                binding.playbackSpeedTv.setText("Playback speed is $progress")
+            }
+            override fun onStartTrackingTouch(seekBar: SeekBar?) {    }
+            override fun onStopTrackingTouch(seekBar: SeekBar?) {     }
+        })
     }
 
     override fun onDestroy() {
