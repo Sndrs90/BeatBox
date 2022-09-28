@@ -1,5 +1,6 @@
 package com.bignerdranch.android.beatbox
 
+import android.annotation.SuppressLint
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.ViewGroup
@@ -14,6 +15,7 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var beatBox: BeatBox
 
+    @SuppressLint("StringFormatMatches")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -27,10 +29,13 @@ class MainActivity : AppCompatActivity() {
             adapter = SoundAdapter(beatBox.sounds)
         }
 
+        binding.playbackSpeedTv.text = getString(R.string.playback_speed, 100)
+
         binding.seekBar.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener{
             override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
-                // Ваш код
-                binding.playbackSpeedTv.setText("Playback speed is $progress")
+                binding.playbackSpeedTv.text = getString(R.string.playback_speed, progress + 50)
+                val speedValue = ((progress + 50)/100.0f)
+                beatBox.rate = speedValue
             }
             override fun onStartTrackingTouch(seekBar: SeekBar?) {    }
             override fun onStopTrackingTouch(seekBar: SeekBar?) {     }
